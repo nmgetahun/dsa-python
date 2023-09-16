@@ -115,13 +115,5 @@ if __name__ == "__main__":
     insertion_sort_itr_visualizer(lst[:]) # visualize the sorting process
 
     versions = [insertion_sort_itr1, insertion_sort_itr2]
-
-    test = 0 # set to 1 to test each version
-    if test:
-        test_versions(lst, versions)
-
-    timer = 0 # set to 1 to time each version
-    if timer:
-        if test:
-            print()
-        time_versions(lst, versions)
+    #test_versions(lst, versions)
+    #time_versions(lst, versions)
