@@ -33,12 +33,12 @@ from time import perf_counter
 
 
 # recursive method
-def insertion_sort_rcr(lst: List[int]) -> List[int]:
+def insertion_sort_rcr(lst: List[int], prnt: bool=True) -> List[int]:
     pass
 
 
 # iterative methods
-def insertion_sort_itr1(lst: List[int], prnt=True) -> None:
+def insertion_sort_itr1(lst: List[int], prnt: bool=True) -> None:
     """Sort by shifting elements rightward, then inserting current element"""
     if prnt:
         print(f"Iterative Version 1\n\tUnsorted: {lst}")
@@ -56,7 +56,7 @@ def insertion_sort_itr1(lst: List[int], prnt=True) -> None:
         print(f"\tSorted: {lst}")
 
 
-def insertion_sort_itr2(lst: List[int], prnt=True) -> None:
+def insertion_sort_itr2(lst: List[int], prnt: bool=True) -> None:
     """Sort by swapping elements leftward until lst[0:i + 1] is sorted"""
     if prnt:
         print(f"Iterative Version 2\n\tUnsorted: {lst}")
@@ -105,6 +105,7 @@ def time_versions(lst: List[int], versions: List[Callable]) -> None:
         for _ in range(1000):
             version(lst[:], False)
         end = perf_counter()
+
         print(f"{str(version).split()[1]} time: {(end - start) * 1000:.3f} μs")
 
 
