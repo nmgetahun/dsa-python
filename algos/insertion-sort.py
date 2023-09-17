@@ -34,7 +34,35 @@ from time import perf_counter
 
 # recursive method
 def insertion_sort_rcr(lst: List[int], prnt: bool=True) -> List[int]:
-    pass
+    """Wrapper for recursive implementation for printing purposes"""
+    if prnt:
+        print(f"Recursive Version\n\tUnsorted: {lst}")
+
+    lst = _insertion_sort_rcr(lst)
+
+    if prnt:
+        print(f"\tSorted: {lst}")
+
+    return lst
+
+
+def _insertion_sort_rcr(lst: List[int]) -> List[int]:
+    """Sort by inserting elements into progressively lengthening sorted lst"""
+    if len(lst) < 2:
+        return lst
+
+    return insert_rcr(_insertion_sort_rcr(lst[:-1]), lst[-1])
+
+
+def insert_rcr(lst: List[int], element: int) -> None:
+    """Insert element into lst (assumed to be sorted)"""
+    if not lst:
+        return [element]
+
+    if element < lst[0]:
+        return [element] + lst
+
+    return lst[:1] + insert_rcr(lst[1:], element)
 
 
 # iterative methods
@@ -95,25 +123,41 @@ def insertion_sort_itr_visualizer(lst: List[int]) -> None:
 
 # main helpers
 def test_versions(lst: List[int], versions: List[Callable]) -> None:
+    print("Testing verions")
+    sorted_lst = sorted(lst)
+
     for version in versions:
-        version(lst[:])
+        test_lst = lst[:]
+        return_val = version(test_lst, False)
+        if return_val:
+            test_lst = return_val
+
+        valid_sort = ("Invalid", "Valid")[test_lst == sorted_lst]
+        print(f"\t{str(version).split()[1]}: {valid_sort}")
 
 
 def time_versions(lst: List[int], versions: List[Callable]) -> None:
+    print("Timing verions")
+
     for version in versions:
         start = perf_counter()
         for _ in range(1000):
             version(lst[:], False)
         end = perf_counter()
 
-        print(f"{str(version).split()[1]} time: {(end - start) * 1000:.3f} μs")
+        print(f"\t{str(version).split()[1]} time: {(end - start) * 1000:.3f}μs")
 
 
 # main
 if __name__ == "__main__":
     lst = [1, 4, 2, 9, 10, 8, 19, 11, 5, 100, 7, 6, 0, 10, 10, 10]
-    insertion_sort_itr_visualizer(lst[:]) # visualize the sorting process
+    versions = [insertion_sort_rcr, insertion_sort_itr1, insertion_sort_itr2]
 
-    versions = [insertion_sort_itr1, insertion_sort_itr2]
-    #test_versions(lst, versions)
-    #time_versions(lst, versions)
+    insertion_sort_itr_visualizer(lst[:]) # visualize the sorting process
+    
+    # test_versions(lst, versions)
+
+    # time_versions(lst, versions)
+    #     insertion_sort_rcr time: 14.305μs
+    #     insertion_sort_itr1 time: 4.675μs
+    #     insertion_sort_itr2 time: 6.099μs
