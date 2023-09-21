@@ -2,15 +2,11 @@
 Written by Nat Getahun
 
 Bubble Sort
----------
+-----------
 As the name implies, this sort successively bubbles up the largest element to
 the end of the list, then decremenets the length of the list we're working with
 by 1 until we reach the beginning of the list (which by now will be the
 smallest element).
-
-Cases:
-    Base case: explanation
-    Other: explanation
 
 Complexity:
     Time: O(n^2) (O(n) for sorted list)
@@ -20,8 +16,9 @@ from __future__ import annotations
 from typing import List
 from sort_analytics import test_versions, time_versions, DEFAULT_UNSORTED_LIST
 
+
 def bubble_sort(lst: List[int], prnt: bool=True) -> None:
-    """Sort by moving largest element to end of current sublist until sorted"""
+    """Sort by swapping mismatched elements of current sublist until sorted"""
     if prnt:
         print(f"Bubble Sort\n\tUnsorted: {lst}")
 
