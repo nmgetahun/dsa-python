@@ -70,4 +70,6 @@ if __name__ == "__main__":
     versions = [merge_sort]
 
     test_versions(versions) # valid
-    time_versions(versions) # 11.643 μs
+    time_versions(versions)
+    # short: 11.643 μs
+    # long: 4.946 s

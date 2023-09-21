@@ -23,7 +23,7 @@ Cases:
                           shifts all elements in S that are > N rightward
 
 Complexity:
-    Time: O(n^2) (O(n) when list is sorted or close)
+    Time: O(n^2) (O(n) for sorted list)
     Space: O(1)
 """
 # ------------------------------------------------------------------------------
@@ -131,6 +131,12 @@ if __name__ == "__main__":
 
     test_versions(versions) # all valid
     time_versions(versions)
+    # short:
     #    insertion_sort_rcr: 14.305 μs
     #    insertion_sort_itr1: 4.675 μs
     #    insertion_sort_itr2: 6.099 μs
+    #
+    # long:
+    #    insertion_sort_rcr: 368.911 s (SLOW AS FUCK)
+    #    insertion_sort_itr1: 18.539 s
+    #    insertion_sort_itr2: 27.327 s
