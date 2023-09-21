@@ -4,7 +4,7 @@ from time import perf_counter
 
 DEFAULT_LIST = [1, 4, 2, 9, 10, 8, 19, 11, 5, 100, 7, 6, 0, 10, 10, 10]
 
-def test_versions(versions: List[Callable], lst: List[int]=None, prnt=False) -> None:
+def test_versions(versions: List[Callable], lst: List[int]=None, prnt: bool=False) -> None:
     if not lst:
         lst = DEFAULT_LIST[:]
 
