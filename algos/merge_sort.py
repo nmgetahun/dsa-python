@@ -41,6 +41,7 @@ def merge_sort(lst: List[int], prnt: bool=True) -> List[int]:
 
 
 def _merge_sort(lst: List[int]) -> List[int]:
+    """Sort list by dividing, sorting components, then merging back into one"""
     if len(lst) < 2:
         return lst
 
@@ -49,6 +50,7 @@ def _merge_sort(lst: List[int]) -> List[int]:
 
 
 def merge(lst1: List[int], lst2: List[int]) -> List[int]:
+    """Merge two sorted lists into one"""
     if not lst1:
         return lst2
     if not lst2:
