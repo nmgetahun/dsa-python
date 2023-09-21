@@ -9,18 +9,18 @@ section of the list into its appropriate location in the sorted section
 
 Cases:
     List is empty or has 1 element: lst is already sorted
-    List has > 1 elements: - assume lst[0] is sorted and lst[1:] is unsorted
-                               - denote sorted and unsorted portions by S & U
-                           - get the first element N in U
-                           - shift elements in S rightward until appropriate
-                           index I for N is found
-                               - I = index in S s.t. all elements before I are
-                               <= N and all elements after I are >= N
-                           - once index is found, insert N into S at I
-                           - repeat until lst is sorted
-                           - notice: after every iteration, len(S)++ & len(U)--
-                           - if sorting in nondecreasing order, this process
-                           shifts all elements in S that are > N rightward
+    List has 1+ elements: - assume lst[0] is sorted and lst[1:] is unsorted
+                              - denote sorted and unsorted portions by S & U
+                          - get the first element N in U
+                          - shift elements in S rightward until appropriate
+                          index I for N is found
+                              - I = index in S s.t. all elements before I are
+                              <= N and all elements after I are >= N
+                          - once index is found, insert N into S at I
+                          - repeat until lst is sorted
+                          - notice: after every iteration, len(S)++ & len(U)--
+                          - if sorting in nondecreasing order, this process
+                          shifts all elements in S that are > N rightward
 
 Complexity:
     Time: O(n^2) (O(n) when list is sorted or close)
@@ -28,8 +28,8 @@ Complexity:
 """
 # ------------------------------------------------------------------------------
 from __future__ import annotations
-from typing import List, Callable
-from time import perf_counter
+from typing import List
+from sort_analytics import test_versions, time_versions, DEFAULT_UNSORTED_LIST
 
 
 # recursive method
@@ -102,62 +102,35 @@ def insertion_sort_itr2(lst: List[int], prnt: bool=True) -> None:
 
 
 def insertion_sort_itr_visualizer(lst: List[int]) -> None:
-    print(f"Visualizer\nUnsorted: {lst}\n")
+    print(f"Visualizer\n\tUnsorted: {lst}\n")
 
     for i in range(1, len(lst)):
         curr = lst[i]
         j = i
         lst[i] = '_'
-        print(f"Sorted lst: {lst[:i + 1]} -> adding {curr}")
+        print(f"\tSorted lst: {lst[:i + 1]} -> adding {curr}")
         while j >= 1 and lst[j - 1] > curr:
             lst[j] = lst[j - 1]
             lst[j - 1] = '_'
             j -= 1
-            print(f"\t{lst[:i + 1]}")
+            print(f"\t\t{lst[:i + 1]}")
 
         lst[j] = curr
-        print(f"Done adding {curr}: {lst[:i + 1]}\n")
+        print(f"\tDone adding {curr}: {lst[:i + 1]}\n")
 
-    print(f"Sorted: {lst}")
-
-
-# main helpers
-def test_versions(lst: List[int], versions: List[Callable]) -> None:
-    print("Testing verions")
-    sorted_lst = sorted(lst)
-
-    for version in versions:
-        test_lst = lst[:]
-        return_val = version(test_lst, False)
-        if return_val:
-            test_lst = return_val
-
-        valid_sort = ("Invalid", "Valid")[test_lst == sorted_lst]
-        print(f"\t{str(version).split()[1]}: {valid_sort}")
-
-
-def time_versions(lst: List[int], versions: List[Callable]) -> None:
-    print("Timing verions")
-
-    for version in versions:
-        start = perf_counter()
-        for _ in range(1000):
-            version(lst[:], False)
-        end = perf_counter()
-
-        print(f"\t{str(version).split()[1]} time: {(end - start) * 1000:.3f}μs")
+    print(f"\tSorted: {lst}\nVisualizer Done\n\n")
 
 
 # main
 if __name__ == "__main__":
-    lst = [1, 4, 2, 9, 10, 8, 19, 11, 5, 100, 7, 6, 0, 10, 10, 10]
+    # visualize the sorting process
+    insertion_sort_itr_visualizer(DEFAULT_UNSORTED_LIST[:])
+
+    # analytics
     versions = [insertion_sort_rcr, insertion_sort_itr1, insertion_sort_itr2]
 
-    insertion_sort_itr_visualizer(lst[:]) # visualize the sorting process
-    
-    # test_versions(lst, versions)
-
-    # time_versions(lst, versions)
-    #     insertion_sort_rcr time: 14.305μs
-    #     insertion_sort_itr1 time: 4.675μs
-    #     insertion_sort_itr2 time: 6.099μs
+    test_versions(versions) # all valid
+    time_versions(versions)
+    #    insertion_sort_rcr: 14.305 μs
+    #    insertion_sort_itr1: 4.675 μs
+    #    insertion_sort_itr2: 6.099 μs
