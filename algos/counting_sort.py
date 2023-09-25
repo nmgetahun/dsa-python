@@ -2,7 +2,7 @@
 Written by Nat Getahun
 
 Counting Sort
---------
+-------------
 The sort only works if we know a priori that the given list has only nonnegative
 integers. If it does, we simply create a new list that spans the range of the
 present integers, with which we'll count the occurrence of each integer in the
